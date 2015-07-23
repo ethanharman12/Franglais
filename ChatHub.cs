@@ -24,12 +24,12 @@ namespace Franglais
             this.translator = translator;
         }
 
-        public async void AcceptChat(string name)
+        public async Task AcceptChat(string conn)
         {
-            var inviter = ConnectedUsers.FirstOrDefault(cu => cu.UserName == name);
-            var current = ConnectedUsers.FirstOrDefault(cu => cu.UserName == Context.User.Identity.Name);
+            var inviter = ConnectedUsers.FirstOrDefault(cu => cu.ConnectionId == conn);
+            var current = ConnectedUsers.FirstOrDefault(cu => cu.ConnectionId == Context.ConnectionId);
 
-            if (inviter != null && current != null && inviter.Invites.Contains(current.UserName))
+            if (inviter != null && current != null && inviter.Invites.Contains(current.ConnectionId))
             {
                 var room = new ChatRoom()
                     {
@@ -48,27 +48,27 @@ namespace Franglais
 
         public List<UserModel> GetOtherUsers()
         {
-            return ConnectedUsers.Where(cu => cu.UserName != Context.User.Identity.Name).ToList();
+            return ConnectedUsers.Where(cu => cu.ConnectionId != Context.ConnectionId).ToList();
         }
 
-        public void InviteUser(string name)
+        public void InviteUser(string conn)
         {
-            var currentUser = ConnectedUsers.First(cu => cu.UserName == Context.User.Identity.Name);
+            var currentUser = ConnectedUsers.First(cu => cu.ConnectionId == Context.ConnectionId);
 
-            if (!currentUser.Invites.Contains(name))
+            if (!currentUser.Invites.Contains(conn))
             {
-                currentUser.Invites.Add(name);
+                currentUser.Invites.Add(conn);
             }
 
-            Clients.User(name).inviteReceived(currentUser.UserName);
+            Clients.Client(conn).inviteReceived(currentUser);
         }
 
-        public void JoinLobby(string language)
+        public void JoinLobby(string name, string language)
         {
             var userModel = new UserModel()
             {
                 ConnectionId = Context.ConnectionId,
-                UserName = Context.User.Identity.Name,
+                UserName = name,
                 Language = language,
                 IsChatting = false,
                 Invites = new List<string>()
@@ -76,36 +76,60 @@ namespace Franglais
 
             ConnectedUsers.Add(userModel);
 
+            Groups.Add(Context.ConnectionId, "Lobby");
             Clients.OthersInGroup("Lobby").userJoined(userModel);
         }
 
-        public override Task OnDisconnected(bool stopCalled)
-        {
-            var currentUser = ConnectedUsers.First(cu => cu.UserName == Context.User.Identity.Name);
-
-            ConnectedUsers.Remove(currentUser);
-            Clients.OthersInGroup("Lobby").userDisconnected(currentUser.UserName);
-
-            return base.OnDisconnected(stopCalled);
-        }
-
-        public void SendMessage(int roomId, ChatMessage mess)
+        public void JoinRoom(int roomId, string oldConn)
         {
             var room = ChatRooms.FirstOrDefault(rm => rm.Id == roomId);
 
             if (room != null)
             {
-                mess.UserName = Context.User.Identity.Name;
+                var current = room.Users.First(cu => cu.ConnectionId == oldConn);
+
+                if(current != null)
+                {
+                    current.ConnectionId = Context.ConnectionId;
+
+                    ConnectedUsers.Add(current);
+                }                
+            }
+        }
+
+        public override Task OnDisconnected(bool stopCalled)
+        {
+            var currentUser = ConnectedUsers.FirstOrDefault(cu => cu.ConnectionId == Context.ConnectionId);
+
+            if (currentUser != null)
+            {
+                ConnectedUsers.Remove(currentUser);
+                Clients.OthersInGroup("Lobby").userDisconnected(currentUser.UserName);
+            }
+
+            return base.OnDisconnected(stopCalled);
+        }
+
+        public async Task SendMessage(int roomId, ChatMessage mess)
+        {
+            var room = ChatRooms.FirstOrDefault(rm => rm.Id == roomId);
+
+            if (room != null)
+            {
+                var sender = room.Users.First(cu => cu.ConnectionId == Context.ConnectionId);
+
+                mess.Sender = sender;
                 mess.Id = messageId++;
 
+                //should just group by language in case of >2 users
                 foreach(var user in room.Users.Where(u => u.ConnectionId != Context.ConnectionId))
                 {
-                    mess.Translation = translator.TranslateMessage(mess.Message, user.Language);
+                    mess.Translation = await translator.TranslateMessage(mess.Message, mess.Sender.Language, user.Language);
                     mess.ServerSent = DateTime.Now;
 
-                    Clients.User(user.UserName).receiveMessage(mess);
+                    Clients.Client(user.ConnectionId).receiveMessage(mess);
                 }
-                //Clients.OthersInGroup("ChatRoom" + roomId).receiveMessage(mess);
+                Clients.Caller.receiveMessage(mess);
             }
         }
     }

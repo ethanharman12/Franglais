@@ -26,5 +26,24 @@ namespace Franglais.Controllers
 
             return View();
         }
+
+        public ActionResult ChatRoom(int id)
+        {
+            //ViewBag.roomId = id;
+
+            var room = ChatHub.ChatRooms.FirstOrDefault(rm => rm.Id == id);
+
+            if (room != null)
+            {
+                //ViewBag.users = room.Users;
+            }
+
+            return View(room);
+        }
+
+        public ActionResult Lobby()
+        {
+            return View();
+        }
     }
 }
