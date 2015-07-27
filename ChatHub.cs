@@ -39,17 +39,15 @@ namespace Franglais
 
                 ChatRooms.Add(room);
 
-                //await Groups.Add(inviter.ConnectionId, "ChatRoom" + room.Id);
-                //await Groups.Add(current.ConnectionId, "ChatRoom" + room.Id);
+                var ids = inviter.ConnectionIds["Lobby"].Union(current.ConnectionIds["Lobby"]).ToList();
 
-                //Clients.Group("ChatRoom" + room.Id).joinRoom(room);
-                Clients.Clients(new List<string>() { inviter.ConnectionIds["Lobby"], current.ConnectionIds["Lobby"] }).joinRoom(room);
+                Clients.Clients(ids).joinRoom(room);
             }
         }
 
-        public List<UserModel> GetOtherUsers()
+        public List<UserModel> GetUsers()
         {
-            return ConnectedUsers.Where(cu => cu.ConnectionIds["Lobby"] != Context.ConnectionId).ToList();
+            return ConnectedUsers.ToList();
         }
 
         public void InviteUser(Guid fromId, Guid toId)
@@ -64,7 +62,7 @@ namespace Franglais
                     currentUser.Invites.Add(toId);
                 }
 
-                Clients.Client(invited.ConnectionIds["Lobby"]).inviteReceived(currentUser);
+                Clients.Clients(invited.ConnectionIds["Lobby"].ToList()).inviteReceived(currentUser);
             }
         }
 
@@ -75,22 +73,33 @@ namespace Franglais
                 id = Guid.NewGuid();
             }
 
-            var userModel = new UserModel()
+            var currentUser = ConnectedUsers.FirstOrDefault(cu => cu.Id == id);
+
+            if (currentUser != null)
             {
-                Id = id.Value,
-                ConnectionIds = new Dictionary<string, string>(),
-                UserName = name,
-                Language = language,
-                IsChatting = false,
-                Invites = new List<Guid>()
-            };
+                if (!currentUser.ConnectionIds.Any(cids => cids.Value.Contains(Context.ConnectionId)))
+                {
+                    currentUser.ConnectionIds["Lobby"].Add(Context.ConnectionId);
+                }
+            }
+            else
+            {
+                var userModel = new UserModel()
+                {
+                    Id = id.Value,
+                    ConnectionIds = new Dictionary<string, List<string>>(),
+                    UserName = name,
+                    Language = language,
+                    IsChatting = false,
+                    Invites = new List<Guid>()
+                };
 
-            userModel.ConnectionIds.Add("Lobby", Context.ConnectionId);
-
-            ConnectedUsers.Add(userModel);
+                userModel.ConnectionIds.Add("Lobby", new List<string>() { Context.ConnectionId });
+                ConnectedUsers.Add(userModel);
+                Clients.OthersInGroup("Lobby").userJoined(userModel);
+            }
 
             Groups.Add(Context.ConnectionId, "Lobby");
-            Clients.OthersInGroup("Lobby").userJoined(userModel);
 
             return id.Value;
         }
@@ -107,11 +116,11 @@ namespace Franglais
                 {
                     if (!current.ConnectionIds.Keys.Contains("Room" + roomId))
                     {
-                        current.ConnectionIds.Add("Room" + roomId, Context.ConnectionId);
+                        current.ConnectionIds.Add("Room" + roomId, new List<string>() { Context.ConnectionId });
                     }
                     else
                     {
-                        current.ConnectionIds["Room" + roomId] = Context.ConnectionId;
+                        current.ConnectionIds["Room" + roomId].Add(Context.ConnectionId);
                     }
                 }
             }
@@ -119,12 +128,23 @@ namespace Franglais
 
         public override Task OnDisconnected(bool stopCalled)
         {
-            var currentUser = ConnectedUsers.FirstOrDefault(cu => cu.ConnectionIds.Any(cid => cid.Value == Context.ConnectionId));
+            var currentUser = ConnectedUsers.FirstOrDefault(cu => cu.ConnectionIds.Any(cid => cid.Value.Contains(Context.ConnectionId)));
 
             if (currentUser != null)
             {
-                ConnectedUsers.Remove(currentUser);
-                Clients.OthersInGroup("Lobby").userDisconnected(currentUser.Id);
+                var keyVal = currentUser.ConnectionIds.First(pair => pair.Value.Contains(Context.ConnectionId));
+
+                keyVal.Value.Remove(Context.ConnectionId);
+                if (keyVal.Value.Count == 0)
+                {
+                    currentUser.ConnectionIds.Remove(keyVal.Key);
+                    Clients.OthersInGroup(keyVal.Key).userDisconnected(currentUser.Id);
+                }
+
+                if (currentUser.ConnectionIds.Count == 0)
+                {
+                    ConnectedUsers.Remove(currentUser);
+                }
             }
 
             return base.OnDisconnected(stopCalled);
@@ -136,7 +156,7 @@ namespace Franglais
 
             if (room != null)
             {
-                var sender = room.Users.First(cu => cu.ConnectionIds["Room" + roomId] == Context.ConnectionId);
+                var sender = room.Users.First(cu => cu.ConnectionIds["Room" + roomId].Contains(Context.ConnectionId));
 
                 mess.Sender = sender;
                 mess.Id = messageId++;
@@ -150,9 +170,9 @@ namespace Franglais
                     }
                     mess.ServerSent = DateTime.Now;
 
-                    Clients.Client(user.ConnectionIds["Room" + roomId]).receiveMessage(mess);
+                    Clients.Clients(user.ConnectionIds["Room" + roomId].ToList()).receiveMessage(mess);
                 }
-                Clients.Caller.receiveMessage(mess);
+                Clients.Clients(sender.ConnectionIds["Room" + roomId]).receiveMessage(mess);
             }
         }
     }

@@ -1,13 +1,13 @@
 ﻿var lobbyApp = (function ()
 {
     var chatHub = $.connection.chatHub;
-    var users = [];
-    var userId = "";
+    var userId = localStorage.userId;
+    var name = localStorage.userName;
+    var lang = localStorage.language;
 
     //private
     function AddUser(user)
     {
-        users.push(user);
         DisplayUser(user);
     };
     function DisplayUser(user)
@@ -16,7 +16,8 @@
         if (!userEle)
         {
             var html = '<div id="User' + user.Id + '" class="userDiv">' +
-                        user.UserName + ' <span id="invitedCheck"></span>' +
+                        user.UserName + ' - (' + user.Language + ')' +
+                        ' <div class="invited"><span class="invitedCheck"></span> <span class="invitedText"></span></div>' +
                        '</div>';
             $("#usersDiv").append(html);
             $("#User" + user.Id).click(user.Id, Invite);
@@ -24,12 +25,7 @@
     };
     function DisconnectUser(conn)
     {
-        var userDiv = $("#User" + conn);
-        //userDiv.fadeOut(1500);
-        //interval(1500, function ()
-        //{
-            userDiv.remove();
-        //});
+        $("#User" + conn).remove();
     };
     function JoinRoom(room)
     {
@@ -39,7 +35,8 @@
     function ReceiveInvite(user)
     {
         $("#User" + user.Id).off("click").click(user.Id, Accept).css("background-color", "lightgreen").addClass("preview");
-        $("#User" + user.Id + " #invitedCheck").addClass("glyphicon glyphicon-ok");
+        $("#User" + user.Id + " .invitedCheck").addClass("glyphicon glyphicon-ok");
+        $("#User" + user.Id + " .invitedText").text("Invite Received!");
     };
 
     function Accept(conn)
@@ -48,16 +45,14 @@
     };
     function Invite(conn)
     {
-        $("#User" + conn.data).css("background-color", "lightgreen");
-        $("#User" + conn.data + " #invitedCheck").addClass("glyphicon glyphicon-ok");
+        $("#User" + conn.data).css("background-color", "lightcyan");
+        $("#User" + conn.data + " .invitedCheck").addClass("glyphicon glyphicon-ok");
+        $("#User" + conn.data + " .invitedText").text("Invite Sent!");
 
         chatHub.server.inviteUser(userId, conn.data);
     };
     function SetUpHub()
     {
-        var name = localStorage.userName;
-        var lang = localStorage.language;
-
         if (name && lang)
         {
             chatHub.client.inviteReceived = ReceiveInvite;
@@ -67,17 +62,21 @@
 
             $.connection.hub.start().done(function ()
             {
-                var id = localStorage.userId;
-                chatHub.server.joinLobby(name, lang, id).done(function(data)
+                chatHub.server.joinLobby(name, lang, userId).done(function (sentId)
                 {
-                    id = data;
-                    localStorage.userId = id;
-                    userId = id;
-                });                               
+                    localStorage.userId = sentId;
+                    userId = sentId;
 
-                chatHub.server.getOtherUsers().done(function (data)
-                {
-                    data.forEach(AddUser);
+                    chatHub.server.getUsers().done(function (users)
+                    {
+                        users.forEach(function (user)
+                        {
+                            if (user.Id != userId)
+                            {
+                                AddUser(user);
+                            }
+                        });
+                    });
                 });
             });
         }

@@ -57,6 +57,10 @@ textarea {
     display: block;
 }
 
+#usersDiv{
+    min-height:150px;
+}
+
 .userDiv{
     border:dashed 1px black;
     padding:10px;
@@ -67,7 +71,7 @@ textarea {
 
 @-webkit-keyframes preview {
     0% {
-        background-color: white;
+        background-color: lightgreen;
     }
 
     50% {
@@ -76,14 +80,14 @@ textarea {
     }
 
     100% {
-        background-color: white;
+        background-color: lightgreen;
         /*transform: scale(-1.5);*/
     }
 }
 
 @keyframes preview {
     0% {
-        background-color: white;
+        background-color: lightgreen;
     }
 
     50% {
@@ -92,7 +96,7 @@ textarea {
     }
 
     100% {
-        background-color: white;
+        background-color: lightgreen;
         /*transform: scale(-1.5);*/
     }
 }
@@ -102,4 +106,8 @@ textarea {
     -webkit-animation-duration: 2s; /* Chrome, Safari, Opera */
     animation: preview;
     animation-duration: 2s;
+}
+
+.invited{
+    float:right;
 }
