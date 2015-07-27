@@ -19,8 +19,10 @@
     </div>
     <div class="row col-md-12">
         <div id="messageDiv" class="col-md-6">
-            <input type="text" id="messageBox" class="col-md-8"/>
-            <button onclick="chatRoomApp.SendMessage()">Send</button>
+            <form onsubmit="return false;">
+                <input type="text" id="messageBox" class="col-md-8" autocomplete="off" />
+                <input type="submit" value="Send" id="sendButton" onclick="chatRoomApp.SendMessage()" />
+            </form>
         </div>
     </div>    
 </div>
@@ -29,5 +31,5 @@
 {
     <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
     <script src="~/signalr/hubs"></script>
-    <script src="~/ChatRoom.js"></script>
+    <script src="~/App_Scripts/ChatRoom.js"></script>
 }

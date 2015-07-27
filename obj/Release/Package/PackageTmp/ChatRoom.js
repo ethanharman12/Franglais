@@ -28,8 +28,15 @@
     function ReceiveMessage(mess)//, sender)
     {
         var messClass = (mess.Sender.ConnectionId == connId) ? "myMessage" : "theirMessage";
+        var message = mess.Message;
+
+        if (mess.Translation)
+        {
+            message += "<br/>" + mess.Translation;
+        }
+
         $("#chatWindow").append("<div class='message " + messClass + "'>"
-                                + mess.Message + "<br/>" + mess.Translation +
+                                + message +
                                 "</div>");
     };
 

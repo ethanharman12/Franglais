@@ -22,3 +22,84 @@ select,
 textarea {
     max-width: 280px;
 }
+
+#chatWindow{
+    min-height: 150px;
+    max-height: 400px;
+    background-color: white;
+    border: solid gray 1px;
+    overflow-y: scroll;
+}
+
+#messageDiv{
+    margin:5px;
+}
+
+#messageDiv #sendButton{
+    margin-left:10px;
+}
+
+.message{
+    padding: 5px;
+    margin: 5px;
+}
+
+.myMessage{
+    background-color: lightblue;
+    text-align:right;
+}
+
+.theirMessage{
+    background-color: lightgray;
+}
+
+#joinDiv label{
+    display: block;
+}
+
+.userDiv{
+    border:dashed 1px black;
+    padding:10px;
+    margin:5px;
+    background-color:lightblue;
+    cursor:pointer;
+}
+
+@-webkit-keyframes preview {
+    0% {
+        background-color: white;
+    }
+
+    50% {
+        background-color: purple;
+        /*transform: scale(1.5);*/
+    }
+
+    100% {
+        background-color: white;
+        /*transform: scale(-1.5);*/
+    }
+}
+
+@keyframes preview {
+    0% {
+        background-color: white;
+    }
+
+    50% {
+        background-color: purple;
+        /*transform: scale(1.5);*/
+    }
+
+    100% {
+        background-color: white;
+        /*transform: scale(-1.5);*/
+    }
+}
+
+.preview {
+    -webkit-animation: preview; /* Chrome, Safari, Opera */
+    -webkit-animation-duration: 2s; /* Chrome, Safari, Opera */
+    animation: preview;
+    animation-duration: 2s;
+}

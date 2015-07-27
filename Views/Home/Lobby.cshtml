@@ -5,20 +5,6 @@
 <h2>Lobby</h2>
 
 <h4>Chat with Friends!</h4>
-<div id="joinDiv">
-    <label>
-        User Name:
-        <input type="text" id="userNameTextBox" />
-    </label>
-    <label>
-        Language:
-        <select id="languageDDL">
-            <option id="English">English</option>
-            <option id="French">French</option>
-        </select>
-    </label>
-    <button onclick="lobbyApp.JoinLobby()">Join</button>
-</div>
 
 <div id="usersDiv">
 
@@ -31,5 +17,5 @@
 {
     <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
     <script src="~/signalr/hubs"></script>
-    <script src="~/Lobby.js"></script>
+    <script src="~/App_Scripts/Lobby.js"></script>
 }

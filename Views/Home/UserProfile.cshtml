@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Profile";
+}
+
+<h2>Profile</h2>
+
+<div id="joinDiv">
+    <label>
+        User Name:
+        <input type="text" id="userNameTextBox" />
+    </label>
+    <label>
+        Language:
+        <select id="languageDDL">
+            <option id="English">English</option>
+            <option id="Francais">Francais</option>
+            <option id="Espanol">Espanol</option>
+            <option id="Italiano">Italiano</option>
+        </select>
+    </label>
+    <button onclick="profileApp.SaveProfile()">Join</button>
+</div>
+
+@section scripts
+{
+    <script src="~/App_Scripts/Profile.js"></script>
+}

@@ -33,7 +33,7 @@
     };
     function ReceiveInvite(user)
     {
-        var html = '<div id="Invite' + user.ConnectionId + '" class="userDiv" onclick="lobbyApp.Accept(\'' + user.ConnectionId + '\')">' +
+        var html = '<div id="Invite' + user.ConnectionId + '" class="chatInvite" onclick="lobbyApp.Accept(\'' + user.ConnectionId + '\')">' +
                     'Click to chat with ' + user.UserName + '.' +
                    '</div>';
         $("#responseDiv").append(html);
