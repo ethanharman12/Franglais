@@ -62,3 +62,4 @@ C:\Users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais\bin\S
 C:\Users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais\bin\System.Web.Optimization.xml
 C:\Users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais\obj\Release\Franglais.dll
 C:\Users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais\obj\Release\Franglais.pdb
+C:\Users\eharman\Documents\Visual Studio 2013\Projects\Franglais\Franglais\obj\Release\Franglais.csprojResolveAssemblyReference.cache

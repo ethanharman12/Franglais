@@ -29,6 +29,13 @@
     };
     function JoinRoom(room)
     {
+        room.Users.forEach(function (user)
+        {
+            $("#User" + user.Id).off("click").click(user.Id, Invite).css("background-color", "lightblue").removeClass("preview");
+            $("#User" + user.Id + " .invitedCheck").removeClass("glyphicon glyphicon-ok");
+            $("#User" + user.Id + " .invitedText").text("");
+        });
+
         window.open("/Home/ChatRoom/" + room.Id, "_blank");
         //window.location = ;
     };
