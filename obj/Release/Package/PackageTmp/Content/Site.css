@@ -25,9 +25,10 @@ textarea {
 
 #chatWindow{
     min-height: 150px;
-    max-height: 500px;
+    max-height: 400px;
     background-color: white;
     border: solid gray 1px;
+    overflow-y: scroll;
 }
 
 #messageDiv{
@@ -56,6 +57,10 @@ textarea {
     display: block;
 }
 
+#usersDiv{
+    min-height:150px;
+}
+
 .userDiv{
     border:dashed 1px black;
     padding:10px;
@@ -64,10 +69,45 @@ textarea {
     cursor:pointer;
 }
 
-.chatInvite{
-    border: solid 1px black;
-    padding: 5px;
-    margin: 5px;
-    background-color: lightgreen;
-    cursor: pointer;
+@-webkit-keyframes preview {
+    0% {
+        background-color: lightgreen;
+    }
+
+    50% {
+        background-color: purple;
+        /*transform: scale(1.5);*/
+    }
+
+    100% {
+        background-color: lightgreen;
+        /*transform: scale(-1.5);*/
+    }
+}
+
+@keyframes preview {
+    0% {
+        background-color: lightgreen;
+    }
+
+    50% {
+        background-color: purple;
+        /*transform: scale(1.5);*/
+    }
+
+    100% {
+        background-color: lightgreen;
+        /*transform: scale(-1.5);*/
+    }
+}
+
+.preview {
+    -webkit-animation: preview; /* Chrome, Safari, Opera */
+    -webkit-animation-duration: 2s; /* Chrome, Safari, Opera */
+    animation: preview;
+    animation-duration: 2s;
+}
+
+.invited{
+    float:right;
 }

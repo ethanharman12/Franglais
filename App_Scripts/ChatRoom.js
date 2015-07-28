@@ -4,6 +4,7 @@
     var roomId = 0;
     var userId = "";
     var users = [];
+    var soundsOn = false;
 
     //private
     function AddUser(user)
@@ -27,21 +28,56 @@
     };
     function ReceiveMessage(mess)
     {
-        var messClass = (mess.Sender.Id == userId) ? "myMessage" : "theirMessage";
-        var message = (mess.Sender.Id == userId) ? mess.Message : mess.Sender.UserName + ": " + mess.Message;
+        var messClass = "myMessage";
+        var message = mess.Message;
+        var label = mess.Sender.UserName;
 
-        if (mess.Translation)
+        if (mess.Sender.Id != userId)
         {
-            message += "<br/>" + mess.Translation;
+            messClass = "theirMessage";
+            if (mess.Translation)
+            {
+                message += "<br/>" + mess.Translation;
+            }
+
+            if (soundsOn)
+            {
+                PlaySound(mess);
+            }
         }
 
-        $("#chatWindow").append("<div class='message " + messClass + "'>"
-                                + message +
-                                "</div>");
+        var labelCell = '<td class="' + messClass + 'Label">' + label + '</td>';
+        var messCell = '<td class="' + messClass + '">' + message + '</td>';
+        var row = (mess.Sender.Id != userId)
+                        ? labelCell + messCell + "<td></td>"
+                        : "<td></td>" + messCell + labelCell;
+
+        $("#chatWindow table").append('<tr class="row">' + row + '</tr>');
+        //$("#chatWindow table").append("<div class='" + messClass + "Label'>" + label + "</div>" +
+        //                        "<div class='message " + messClass + "'>" + message + "</div>");
 
         $('#chatWindow').animate({ scrollTop: $('#chatWindow').prop("scrollHeight") }, 500);
     };
 
+    function PlaySound(message)
+    {
+        if (typeof (SpeechSynthesisUtterance) != "undefined")
+        {
+            var msg = null;
+            if (message.Translation)
+            {
+                msg = new SpeechSynthesisUtterance(message.Translation);
+            }
+            else
+            {
+                msg = new SpeechSynthesisUtterance(message.Message);
+            }
+
+            msg.lang = localStorage.language;
+
+            window.speechSynthesis.speak(msg);
+        }
+    }
     function SendMessage()
     {
         var mess = $("#messageBox").val();
@@ -69,10 +105,17 @@
             chatHub.server.joinRoom(roomId, userId);
         });
     };
+    function ToggleSound()
+    {
+        soundsOn = !soundsOn;
+        $("#soundSpan").toggleClass("glyphicon-volume-off glyphicon-volume-up");
+    };
 
     return {
+        PlaySound: PlaySound,
         SendMessage: SendMessage,
-        SetUpHub: SetUpHub
+        SetUpHub: SetUpHub,
+        ToggleSound: ToggleSound
     };
 })();
 

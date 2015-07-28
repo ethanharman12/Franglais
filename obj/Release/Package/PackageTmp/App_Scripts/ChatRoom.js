@@ -2,7 +2,7 @@
 {
     var chatHub = $.connection.chatHub;
     var roomId = 0;
-    var connId = "";
+    var userId = "";
     var users = [];
 
     //private
@@ -21,14 +21,14 @@
         var userEle = document.getElementById("User" + user.Id);
         userEle.addEventListener("click", Invite);
     };
-    function DisconnectUser(name)
+    function DisconnectUser(userId)
     {
-        $("#User" + name).fadeOut(2);
+        $("#User" + userId).fadeOut(2);
     };
-    function ReceiveMessage(mess)//, sender)
+    function ReceiveMessage(mess)
     {
-        var messClass = (mess.Sender.ConnectionId == connId) ? "myMessage" : "theirMessage";
-        var message = mess.Message;
+        var messClass = (mess.Sender.Id == userId) ? "myMessage" : "theirMessage";
+        var message = (mess.Sender.Id == userId) ? mess.Message : mess.Sender.UserName + ": " + mess.Message;
 
         if (mess.Translation)
         {
@@ -38,6 +38,8 @@
         $("#chatWindow").append("<div class='message " + messClass + "'>"
                                 + message +
                                 "</div>");
+
+        $('#chatWindow').animate({ scrollTop: $('#chatWindow').prop("scrollHeight") }, 500);
     };
 
     function SendMessage()
@@ -47,8 +49,7 @@
         var messObj = { Message: mess, ClientSent: sendTime };
         chatHub.server.sendMessage(roomId, messObj);
 
-        $("#messageBox").val("");
-        //ReceiveMessage(messObj, "me");
+        $("#messageBox").val("").focus();
     };
     function SetUpHub()
     {
@@ -62,16 +63,10 @@
         {
             if (localStorage)
             {
-                connId = localStorage.connectionId;
+                userId = localStorage.userId;
             }
 
-            chatHub.server.joinRoom(roomId, connId);
-
-            if (localStorage)
-            {
-                connId = $.connection.hub.id;
-                localStorage.connectionId = connId;                
-            }
+            chatHub.server.joinRoom(roomId, userId);
         });
     };
 

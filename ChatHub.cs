@@ -77,9 +77,19 @@ namespace Franglais
 
             if (currentUser != null)
             {
+                currentUser.Language = language;
+                currentUser.UserName = name;
+
                 if (!currentUser.ConnectionIds.Any(cids => cids.Value.Contains(Context.ConnectionId)))
                 {
-                    currentUser.ConnectionIds["Lobby"].Add(Context.ConnectionId);
+                    if (currentUser.ConnectionIds.Keys.Contains("Lobby"))
+                    {
+                        currentUser.ConnectionIds["Lobby"].Add(Context.ConnectionId);
+                    }
+                    else
+                    {
+                        currentUser.ConnectionIds.Add("Lobby", new List<string>() { Context.ConnectionId });
+                    }
                 }
             }
             else

@@ -11,12 +11,12 @@
             name = localStorage.userName;
         }
 
-        $("#languageDDL").val(lang);
+        $("#languageDDL :selected").text(lang);
         $("#userNameTextBox").val(name);
     };
     function SaveProfile()
     {
-        var lang = $("#languageDDL").val();
+        var lang = $("#languageDDL :selected").text();
         var name = $("#userNameTextBox").val();
 
         if (localStorage)
