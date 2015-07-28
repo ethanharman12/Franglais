@@ -213,6 +213,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Scripts\ChatRoom.js" />
+    <Content Include="App_Scripts\LanguageDictionary.js" />
     <Content Include="App_Scripts\Profile.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />

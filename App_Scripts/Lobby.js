@@ -16,7 +16,7 @@
         if (!userEle)
         {
             var html = '<div id="User' + user.Id + '" class="userDiv">' +
-                        user.UserName + ' - (' + user.Language + ')' +
+                        user.UserName + ' - ' + langDictionary.Languages[user.Language] + 
                         ' <div class="invited"><span class="invitedCheck"></span> <span class="invitedText"></span></div>' +
                        '</div>';
             $("#usersDiv").append(html);

@@ -2,6 +2,8 @@
 {
     function LoadProfile()
     {
+        langDictionary.GetOptions(document.getElementById("languageDDL"));
+
         var lang = "English";
         var name = "User";
 
