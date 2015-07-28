@@ -3,28 +3,27 @@
     var chatHub = $.connection.chatHub;
     var roomId = 0;
     var userId = "";
-    var users = [];
     var soundsOn = false;
 
     //private
     function AddUser(user)
     {
-        users.push(user);
         DisplayUser(user);
     };
-    function DiplayUser(user)
+    function DisplayUser(user)
     {
-        var html = '<div id="User' + user.Id + '" class="userDiv">' +
-                    user.UserName +
-                   '</div>';
-        $("#usersDiv").append("html");
-
         var userEle = document.getElementById("User" + user.Id);
-        userEle.addEventListener("click", Invite);
+        if (!userEle)
+        {
+            var html = '<div id="User' + user.Id + '" class="col-md-2 participantDiv">' +
+                        user.UserName + ' - ' + langDictionary.Languages[user.Language] +
+                       '</div>';
+            $("#participantsDiv").append(html);
+        }
     };
-    function DisconnectUser(userId)
+    function DisconnectUser(conn)
     {
-        $("#User" + userId).fadeOut(2);
+        $("#User" + conn).remove();
     };
     function ReceiveMessage(mess)
     {
@@ -105,6 +104,37 @@
             chatHub.server.joinRoom(roomId, userId);
         });
     };
+    function Speak()
+    {
+        if (typeof (webkitSpeechRecognition) != "undefined")
+        {
+            var recognition = new webkitSpeechRecognition();
+
+            recognition.lang = localStorage.language;
+
+            recognition.onresult = function (event)
+            {
+                if (event.results.length > 0)
+                {
+                    $("#messageBox").val(event.results[0][0].transcript);
+                }
+            };
+
+            recognition.onerror = function (event)
+            {
+                alert("Speech to Text error: " + event.error);
+            };
+
+            recognition.onend = function ()
+            {
+                $("#micSpan").toggleClass("glyphicon-bullhorn glyphicon-headphones");
+            };
+
+            recognition.start();
+
+            $("#micSpan").toggleClass("glyphicon-bullhorn glyphicon-headphones");
+        }
+    };
     function ToggleSound()
     {
         soundsOn = !soundsOn;
@@ -115,6 +145,7 @@
         PlaySound: PlaySound,
         SendMessage: SendMessage,
         SetUpHub: SetUpHub,
+        Speak: Speak,
         ToggleSound: ToggleSound
     };
 })();

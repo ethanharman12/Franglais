@@ -120,7 +120,23 @@ namespace Franglais
 
             if (room != null)
             {
-                var current = room.Users.First(cu => cu.Id == userId);
+                var current = room.Users.FirstOrDefault(cu => cu.Id == userId);
+
+                if (current == null)
+                {
+                    //can a new user join the room?
+                    //yes for now...need to lock down somehow
+                    current = ConnectedUsers.FirstOrDefault(cu => cu.Id == userId);
+
+                    if (current != null)
+                    {                
+                        List<string> ids = new List<string>();
+                        room.Users.ForEach(user => ids = ids.Union(user.ConnectionIds["Room" + roomId]).ToList());
+                        Clients.Clients(ids).userJoined(current);
+
+                        room.Users.Add(current);
+                    }
+                }
 
                 if (current != null)
                 {
@@ -132,6 +148,11 @@ namespace Franglais
                     {
                         current.ConnectionIds["Room" + roomId].Add(Context.ConnectionId);
                     }
+                }
+
+                foreach (var user in room.Users.Where(usr => usr.Id != userId))
+                {
+                    Clients.Caller.userJoined(user);
                 }
             }
         }
@@ -171,12 +192,16 @@ namespace Franglais
                 mess.Sender = sender;
                 mess.Id = messageId++;
 
+                var sourceLang = mess.Sender.Language.Substring(0, 2);
+
                 //should just group by language in case of >2 users
                 foreach (var user in room.Users.Where(u => u != sender))
                 {
-                    if (mess.Sender.Language != user.Language)
+                    var userLang = user.Language.Substring(0, 2);
+
+                    if (sourceLang != userLang)
                     {
-                        mess.Translation = await translator.TranslateMessage(mess.Message, mess.Sender.Language, user.Language);
+                        mess.Translation = await translator.TranslateMessage(mess.Message, sourceLang, userLang);
                     }
                     mess.ServerSent = DateTime.Now;
 

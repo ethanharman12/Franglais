@@ -12,16 +12,22 @@
     <label>
         Language:
         <select id="languageDDL">
-            <option id="English">English</option>
-            <option id="Francais">Francais</option>
-            <option id="Espanol">Espanol</option>
-            <option id="Italiano">Italiano</option>
+            @*<option value="en-US">English (US)</option>
+            <option value="en-GB">English (UK)</option>
+            <option value="fr-FR">French</option>
+            <option value="es-ES">Spanish (Spain)</option>
+            <option value="es-MX">Spanish (Mexico)</option>
+            <option value="de-DE">German</option>
+            <option value="it-IT">Italian</option>
+            <option value="ru-RU">Russian</option>
+            <option value="ja-JP">Japanese</option>*@
         </select>
     </label>
-    <button onclick="profileApp.SaveProfile()">Join</button>
+    <button onclick="profileApp.SaveProfile()">Save</button>
 </div>
 
 @section scripts
 {
+    <script src="~/App_Scripts/LanguageDictionary.js"></script>
     <script src="~/App_Scripts/Profile.js"></script>
 }

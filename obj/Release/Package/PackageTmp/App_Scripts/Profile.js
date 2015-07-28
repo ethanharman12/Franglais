@@ -2,6 +2,8 @@
 {
     function LoadProfile()
     {
+        langDictionary.GetOptions(document.getElementById("languageDDL"));
+
         var lang = "English";
         var name = "User";
 
@@ -11,12 +13,12 @@
             name = localStorage.userName;
         }
 
-        $("#languageDDL :selected").text(lang);
+        $("#languageDDL").val(lang);
         $("#userNameTextBox").val(name);
     };
     function SaveProfile()
     {
-        var lang = $("#languageDDL :selected").text();
+        var lang = $("#languageDDL").val();
         var name = $("#userNameTextBox").val();
 
         if (localStorage)

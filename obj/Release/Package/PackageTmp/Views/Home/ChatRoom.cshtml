@@ -7,15 +7,16 @@
 <h2>Chat Room <span id="roomId">@Model.Id</span></h2>
 
 @*@(foreach(var user in Model.Users)
-{
-    Html.DisplayFor(model => user);
-})*@
-
+    {
+        Html.DisplayFor(model => user);
+    })*@
 <div class="row">
     <div class="row col-md-12">
         <div id="chatWindow" class="col-md-6">
-
+            <table>
+            </table>            
         </div>
+        <span id="soundSpan" class="glyphicon glyphicon-volume-off" onclick="chatRoomApp.ToggleSound()"></span>
     </div>
     <div class="row col-md-12">
         <div id="messageDiv" class="col-md-6">
@@ -24,7 +25,7 @@
                 <input type="submit" value="Send" id="sendButton" onclick="chatRoomApp.SendMessage()" />
             </form>
         </div>
-    </div>    
+    </div>
 </div>
 
 @section scripts

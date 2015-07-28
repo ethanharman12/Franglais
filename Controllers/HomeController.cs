@@ -10,13 +10,11 @@ namespace Franglais.Controllers
     {
         public ActionResult ChatRoom(int id)
         {
-            //ViewBag.roomId = id;
-
             var room = ChatHub.ChatRooms.FirstOrDefault(rm => rm.Id == id);
 
-            if (room != null)
+            if (room == null)
             {
-                //ViewBag.users = room.Users;
+                return Redirect("../Lobby");
             }
 
             return View(room);
