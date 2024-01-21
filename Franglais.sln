@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Franglais", "Franglais\Franglais.csproj", "{2D3694FB-5BF4-4615-96CA-E7B80F67E906}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Franglais", "Franglais.csproj", "{2D3694FB-5BF4-4615-96CA-E7B80F67E906}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Franglais.Tests", "Franglais.Tests\Franglais.Tests.csproj", "{44DC57A6-F188-4A6C-873E-5E101A1E160A}"
 EndProject
