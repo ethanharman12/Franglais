@@ -22,7 +22,7 @@ namespace Franglais
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 
                 var query = string.Format("language/translate/v2?key={0}&q={1}&source={2}&target={3}",
-                    "AIzaSyCq0XUawoWHjHGExmtlgkx3fmTW8AiJBa8",//ConfigurationManager.AppSettings["GoogleApiKey"],
+                    "",//ConfigurationManager.AppSettings["GoogleApiKey"],
                     HttpUtility.UrlEncode(message),
                     sourceLang,//.Substring(0,2),
                     targetLang);//.Substring(0,2));
