@@ -3,7 +3,6 @@
 ################################################################################
 
 /.vs
-/bin
-/obj
-/Franglais.Tests/bin
-/Franglais.Tests/obj
+/FranglaisChat/bin/Debug
+/FranglaisChat/obj
+/FranglaisChat/wwwroot/lib
