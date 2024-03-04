@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Profile";
+}
+
+<h2>Profile</h2>
+
+<div id="joinDiv">
+    <label>
+        User Name:
+        <input type="text" id="userNameTextBox" />
+    </label>
+    <label>
+        Language:
+        <select id="languageDDL">
+            @*<option value="en-US">English (US)</option>
+            <option value="en-GB">English (UK)</option>
+            <option value="fr-FR">French</option>
+            <option value="es-ES">Spanish (Spain)</option>
+            <option value="es-MX">Spanish (Mexico)</option>
+            <option value="de-DE">German</option>
+            <option value="it-IT">Italian</option>
+            <option value="ru-RU">Russian</option>
+            <option value="ja-JP">Japanese</option>*@
+        </select>
+    </label>
+    <button onclick="profileApp.SaveProfile()" class="btn btn-info">Save</button>
+</div>
+
+@section scripts
+{
+    <script src="~/js/LanguageDictionary.js"></script>
+    <script src="~/js/Profile.js"></script>
+}

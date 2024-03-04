@@ -1,0 +1,40 @@
+﻿@model Franglais.Models.ChatRoom
+
+@{
+    ViewBag.Title = "Chat Room";
+}
+
+<h2>Chat Room <span id="roomId">@Model.Id</span></h2>
+
+@*@(foreach(var user in Model.Users)
+    {
+        Html.DisplayFor(model => user);
+    })*@
+<div id="participantsDiv" class="row">
+
+</div>
+<div class="row">
+    <div class="row col-md-12">
+        <div id="chatWindow" class="col-md-6">
+            <table></table>
+        </div>
+        <span id="soundSpan" class="glyphicon glyphicon-volume-off" onclick="chatRoomApp.ToggleSound()"></span>
+    </div>
+    <div class="row col-md-12">
+        <div id="messageDiv" class="col-md-6">
+            <form onsubmit="return false;">
+                <input type="text" id="messageBox" class="col-md-8" autocomplete="off" />
+                <span id="micSpan" class="glyphicon glyphicon-bullhorn" onclick="chatRoomApp.Speak()"></span>
+                <input type="submit" value="Send" id="sendButton" onclick="chatRoomApp.SendMessage()" />
+            </form>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script src="~/App_Scripts/LanguageDictionary.js"></script>
+    <script src="~/App_Scripts/ChatRoom.js"></script>
+}

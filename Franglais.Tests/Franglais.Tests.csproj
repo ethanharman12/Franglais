@@ -11,9 +11,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Franglais.Tests</RootNamespace>
     <AssemblyName>Franglais.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -125,9 +126,9 @@
     <None Include="Scripts\jquery-3.7.1.slim.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Franglais.csproj">
-      <Project>{2d3694fb-5bf4-4615-96ca-e7b80f67e906}</Project>
-      <Name>Franglais</Name>
+    <ProjectReference Include="..\FranglaisChat\FranglaisChat.csproj">
+      <Project>{da397e23-e569-40e4-a2ca-3ae493c6e909}</Project>
+      <Name>FranglaisChat</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

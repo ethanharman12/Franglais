@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Dynamic;
 using Microsoft.AspNet.SignalR.Hubs;
-using Franglais.Models;
+using FranglaisChat;
 using System.Linq;
 using System.Collections.Generic;
 using System.Security.Claims;

@@ -1,0 +1,31 @@
+﻿@model FranglaisChat.Models.ChatRoom
+
+@{
+    ViewBag.Title = "Chat Room";
+}
+<input type="hidden" id="roomId" value="@Model.Id"></input>
+<h2>Chat Room @Model.Id</h2>
+<div class="container">
+    <div class="row"</div>
+        <div id="participantsDiv" class="col-md-3">
+        </div>
+        <div id="chatDiv" class="col-md-9">
+            <div id="chatWindow" class="row">
+                @* <table></table> *@
+            </div>
+            <form onsubmit="return false;" class="row">
+                <i id="soundSpan" class="bi-volume-off" onclick="chatRoomApp.ToggleSound()"></i>
+                <input type="text" id="messageBox" autocomplete="off" class="col-md-8" />
+                <i id="micSpan" class="bi-mic" onclick="chatRoomApp.Speak()"></i>
+                <input type="submit" value="Send" id="sendButton" class="btn btn-info col-md-2" onclick="chatRoomApp.SendMessage()" />
+            </form>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/LanguageDictionary.js"></script>
+    <script src="~/js/ChatRoom.js"></script>
+}

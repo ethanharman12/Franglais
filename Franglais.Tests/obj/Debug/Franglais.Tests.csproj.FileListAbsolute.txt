@@ -1,0 +1,137 @@
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Franglais.Tests.dll.config
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Franglais.Tests.dll
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Franglais.Tests.pdb
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Franglais.dll
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.SignalR.Core.dll
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.SignalR.SystemWeb.dll
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.Owin.dll
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.Owin.Host.SystemWeb.dll
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.Owin.Security.dll
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.Web.Infrastructure.dll
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Moq.dll
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Newtonsoft.Json.dll
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Owin.dll
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.Helpers.dll
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.Mvc.dll
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.Razor.dll
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.WebPages.Deployment.dll
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.WebPages.dll
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.WebPages.Razor.dll
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.Identity.Owin.dll
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.Optimization.dll
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.Http.dll
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\EntityFramework.dll
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.Owin.Security.Cookies.dll
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.Http.WebHost.dll
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\System.Net.Http.Formatting.dll
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Franglais.pdb
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.SignalR.Core.xml
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.SignalR.SystemWeb.xml
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.Owin.xml
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.Owin.Host.SystemWeb.xml
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.Owin.Security.xml
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Moq.xml
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Newtonsoft.Json.xml
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.Helpers.xml
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.Mvc.xml
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.Razor.xml
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.WebPages.xml
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.WebPages.Deployment.xml
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.WebPages.Razor.xml
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.Identity.Owin.xml
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.Optimization.xml
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.Http.xml
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\EntityFramework.xml
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.Owin.Security.Cookies.xml
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.Http.WebHost.xml
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\System.Net.Http.Formatting.xml
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\obj\Debug\Franglais.Tests.csprojResolveAssemblyReference.cache
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\obj\Debug\Franglais.Tests.dll
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\obj\Debug\Franglais.Tests.pdb
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.SignalR.Client.dll
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.SignalR.Owin.dll
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.SignalR.Client.xml
+c:\users\eharman\documents\visual studio 2013\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.SignalR.Owin.xml
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Franglais.Tests.dll.config
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Franglais.Tests.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Franglais.Tests.pdb
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Franglais.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.SignalR.Client.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.SignalR.Core.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.SignalR.Owin.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.SignalR.SystemWeb.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.Owin.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.Owin.Host.SystemWeb.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.Owin.Security.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.Web.Infrastructure.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Moq.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Newtonsoft.Json.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Owin.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.Helpers.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.Mvc.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.Razor.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.WebPages.Deployment.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.WebPages.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.WebPages.Razor.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.Optimization.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.Identity.Owin.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.Http.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\EntityFramework.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.Owin.Security.Cookies.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.Http.WebHost.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\System.Net.Http.Formatting.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.Owin.Security.OAuth.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\System.Memory.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Newtonsoft.Json.Bson.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\System.Buffers.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Franglais.pdb
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Franglais.dll.config
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.SignalR.Client.xml
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.SignalR.Core.pdb
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.SignalR.Core.xml
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.SignalR.Owin.xml
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.SignalR.SystemWeb.pdb
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.SignalR.SystemWeb.xml
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.Owin.xml
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.Owin.Host.SystemWeb.xml
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.Owin.Security.xml
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Moq.pdb
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Moq.xml
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Newtonsoft.Json.xml
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.Helpers.xml
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.Mvc.xml
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.Razor.xml
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.WebPages.xml
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.WebPages.Deployment.xml
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.WebPages.Razor.xml
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.Optimization.xml
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.Identity.Owin.xml
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.Http.xml
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\EntityFramework.xml
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.Owin.Security.Cookies.xml
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\System.Web.Http.WebHost.xml
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\System.Net.Http.Formatting.xml
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.Owin.Security.OAuth.xml
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\System.Memory.xml
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Newtonsoft.Json.Bson.pdb
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Newtonsoft.Json.Bson.xml
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\System.Buffers.xml
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Projects\Franglais\Franglais.Tests\obj\Debug\Franglais.Tests.csproj.CoreCompileInputs.cache
+C:\Projects\Franglais\Franglais.Tests\obj\Debug\Franglais.Tests.dll
+C:\Projects\Franglais\Franglais.Tests\obj\Debug\Franglais.Tests.pdb
+C:\Projects\Franglais\Franglais.Tests\bin\Debug\Microsoft.AspNet.SignalR.Client.pdb
+C:\Projects\Franglais\Franglais.Tests\obj\Debug\Franglais.Tests.csproj.AssemblyReference.cache
+C:\Projects\Franglais\Franglais.Tests\obj\Debug\Franglai.2BD31893.Up2Date

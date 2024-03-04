@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "Lobby";
+}
+
+<h2>Lobby</h2>
+
+<h4>Chat with Friends!</h4>
+<h6>Click a UserName to Send or Accept a Chat Request!</h6>
+<div class="row">
+    <div id="usersDiv" class="col-md-6">
+
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/LanguageDictionary.js"></script>
+    <script src="~/js/Lobby.js"></script>
+}
