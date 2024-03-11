@@ -1,105 +1,84 @@
-﻿var lobbyApp = (function ()
-{
-    var chatHub = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
-    var userId = localStorage.userId;
-    var name = localStorage.userName;
-    var lang = localStorage.language;
+﻿const { createApp, ref } = Vue
 
-    //private
-    function AddUser(user)
-    {
-        DisplayUser(user);
-    };
-    function DisplayUser(user)
-    {
-        var userEle = document.getElementById("User" + user.Id);
-        if (!userEle)
-        {
-            var html = '<div id="User' + user.id + '" class="userDiv">' +
-                        user.userName + ' - ' + langDictionary.Languages[user.language] + 
-                        ' <div class="invited"><span class="invitedCheck"></span> <span class="invitedText"></span></div>' +
-                       '</div>';
-            $("#usersDiv").append(html);
-            $("#User" + user.id).click(user.id, Invite);
-        }
-    };
-    function DisconnectUser(conn)
-    {
-        $("#User" + conn).remove();
-    };
-    function JoinRoom(room)
-    {
-        room.users.forEach(function (user)
-        {
-            $("#User" + user.id).off("click").click(user.id, Invite).css("background-color", "lightblue").removeClass("preview");
-            $("#User" + user.id + " .invitedCheck").removeClass("glyphicon glyphicon-ok");
-            $("#User" + user.id + " .invitedText").text("");
-        });
+createApp({
+    setup() {
+        const users = ref([]);
 
-        window.open("/Home/ChatRoom/" + room.id, "_blank");
-        //window.location = ;
-    };
-    function ReceiveInvite(user)
-    {
-        $("#User" + user.id).off("click").click(user.id, Accept).css("background-color", "lightgreen").addClass("preview");
-        $("#User" + user.id + " .invitedCheck").addClass("glyphicon glyphicon-ok");
-        $("#User" + user.id + " .invitedText").text("Invite Received!");
-    };
+        var chatHub = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+        var userId = localStorage.userId;
+        var name = localStorage.userName;
+        var lang = localStorage.language;
+        
+        function addUser(user) {
+            users.value.push(user);
+        };
 
-    function Accept(clickEvent)
-    {
-        chatHub.invoke("acceptChat", userId, clickEvent.data);
-    };
-    function Invite(clickEvent)
-    {
-        var invitedUserId = clickEvent.data
+        function displayLanguage(language) {
+            return langDictionary.Languages[language];
+        };
+        
+        function disconnectUser(conn) {
+            _.remove(users.value, user => user.id == conn);
+        };
+        function joinRoom(room) {
+            room.users.forEach(function (user) {
+                var chatter = _.find(users.value, u => u.id == inviter.id);
+                chatter.inviteReceived = false;
+                chatter.invited = false;
+            });
 
-        $("#User" + invitedUserId).css("background-color", "lightcyan");
-        $("#User" + invitedUserId + " .invitedCheck").addClass("glyphicon glyphicon-ok");
-        $("#User" + invitedUserId + " .invitedText").text("Invite Sent!");
+            window.open("/Home/ChatRoom/" + room.id, "_blank");
+        };
+        function receiveInvite(inviter) {
+            var user = _.find(users.value, u => u.id == inviter.id);
+            user.inviteReceived = true;
+        };
 
-        chatHub.invoke("inviteUser", userId, invitedUserId);
-    };
-    function SetUpHub()
-    {
-        if (name && lang)
-        {
-            chatHub.on("inviteReceived", ReceiveInvite);
-            chatHub.on("joinRoom", JoinRoom);
-            chatHub.on("userDisconnected", DisconnectUser);
-            chatHub.on("userJoined", AddUser);
+        function accept(inviteId) {
+            chatHub.invoke("acceptChat", userId, inviteId);
+        };
+        function invite(invitedUserId) {
+            var user = _.find(users.value, user => user.id == invitedUserId);
+            user.invited = true;
 
-            chatHub.start().then(function () {
-                chatHub.invoke("joinLobby", name, lang, userId).then(function (sentId)
-                {
-                    localStorage.userId = sentId;
-                    userId = sentId;
+            chatHub.invoke("inviteUser", userId, invitedUserId);
+        };
 
-                    chatHub.invoke("getUsers").then(function (users)
-                    {
-                        users.forEach(function (user)
-                        {
-                            if (user.id != userId)
-                            {
-                                AddUser(user);
-                            }
+        function setUpHub() {
+            if (name && lang) {
+                chatHub.on("inviteReceived", receiveInvite);
+                chatHub.on("joinRoom", joinRoom);
+                chatHub.on("userDisconnected", disconnectUser);
+                chatHub.on("userJoined", addUser);
+
+                chatHub.start().then(function () {
+                    chatHub.invoke("joinLobby", name, lang, userId).then(function (sentId) {
+                        localStorage.userId = sentId;
+                        userId = sentId;
+
+                        chatHub.invoke("getUsers").then(function (lobbyUsers) {
+                            lobbyUsers.forEach(function (user) {
+                                if (user.id != userId) {
+                                    addUser(user);
+                                }
+                            });
                         });
                     });
                 });
-            });
-            
-        }
-        else
-        {
-            window.location = "/Home/UserProfile";
-        }
-    };
 
-    return {
-        Accept: Accept,
-        Invite: Invite,
-        SetUpHub: SetUpHub
-    };
-})();
+            }
+            else {
+                window.location = "/Home/UserProfile";
+            }
+        };
 
-lobbyApp.SetUpHub();
+        setUpHub();
+
+        return {
+            accept,
+            displayLanguage,
+            invite,
+            users
+        }
+    }
+}).mount('#usersDiv')

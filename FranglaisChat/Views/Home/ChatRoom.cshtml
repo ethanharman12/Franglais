@@ -5,19 +5,25 @@
 }
 <input type="hidden" id="roomId" value="@Model.Id"></input>
 <h2>Chat Room @Model.Id</h2>
-<div class="container">
-    <div class="row"</div>
+<div id="chatApp" class="container">
+    <div class="row">
         <div id="participantsDiv" class="col-md-3">
+            <div v-for="user in users" v-bind:id="`User${user.id}`" class="userDiv">
+                {{user.userName}} - {{displayLanguage(user.language)}}
+            </div>
         </div>
         <div id="chatDiv" class="col-md-9">
-            <div id="chatWindow" class="row">
-                @* <table></table> *@
+            <div id="chatWindow">
+                <div v-for="message in messages" class="row">
+                    <div class="col-md-3" :class="{theirMessageLabel: !message.mine, myMessageLabel: message.mine}">{{message.label}}</div>
+                    <div class="col-md-8" :class="{theirMessage: !message.mine, myMessage: message.mine}">{{message.text}}</div>
+                </div>
             </div>
             <form onsubmit="return false;" class="row">
-                <i id="soundSpan" class="bi-volume-off" onclick="chatRoomApp.ToggleSound()"></i>
+                <i id="soundSpan" :class="{'bi-volume-off': !soundsOn, 'bi-volume-up': soundsOn}" v-on:click="toggleSound()"></i>
                 <input type="text" id="messageBox" autocomplete="off" class="col-md-8" />
-                <i id="micSpan" class="bi-mic" onclick="chatRoomApp.Speak()"></i>
-                <input type="submit" value="Send" id="sendButton" class="btn btn-info col-md-2" onclick="chatRoomApp.SendMessage()" />
+                <i id="micSpan" :class="{'bi-mic': !speaking, 'bi-mic-fill': speaking}" v-on:click="speak()"></i>
+                <input type="submit" value="Send" id="sendButton" class="btn btn-info col-md-2" v-on:click="sendMessage()" />
             </form>
         </div>
     </div>
@@ -25,6 +31,10 @@
 
 @section scripts
 {
+    <script src="~/lib/vue/vue.global.js"></script>
+    <script src="~/lib/vue/vue.global.min.js"></script>
+    <script src="~/lib/vue/vue.global.prod.js"></script>
+    <script src="~/lib/vue/vue.global.prod.min.js"></script>
     <script src="~/lib/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/LanguageDictionary.js"></script>
     <script src="~/js/ChatRoom.js"></script>

@@ -8,12 +8,24 @@
 <h6>Click a UserName to Send or Accept a Chat Request!</h6>
 <div class="row">
     <div id="usersDiv" class="col-md-6">
-
+        <div v-for="user in users" v-bind:id="`User${user.id}`" class="userDiv" 
+        :class="{invited: user.invited, inviteReceived: user.inviteReceived, preview: user.inviteReceived}" 
+        v-on:click="user.inviteReceived ? accept(user.id) : invite(user.id)"> 
+            {{user.userName}} - {{displayLanguage(user.language)}}
+            <div class="inviteMessage" v-if="user.invited || user.inviteReceived">
+                <span class="invitedText">{{user.invited ? "Invite Sent!" : "Invite Received!"}}</span>
+                <span class="invitedCheck bi-check-circle"></span>
+            </div>
+        </div>
     </div>
 </div>
 
 @section scripts
 {
+    <script src="~/lib/vue/vue.global.js"></script>
+    <script src="~/lib/vue/vue.global.min.js"></script>
+    <script src="~/lib/vue/vue.global.prod.js"></script>
+    <script src="~/lib/vue/vue.global.prod.min.js"></script>
     <script src="~/lib/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/LanguageDictionary.js"></script>
     <script src="~/js/Lobby.js"></script>

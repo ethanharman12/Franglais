@@ -4,14 +4,15 @@
 
 <h2>Profile</h2>
 
-<div id="joinDiv">
+<div id="profileDiv">
     <label>
         User Name:
-        <input type="text" id="userNameTextBox" />
+        <input type="text" id="userNameTextBox" v-model="userName"/>
     </label>
     <label>
         Language:
-        <select id="languageDDL">
+        <select id="languageDDL" v-model="selectedLanguage">
+            <option v-for="lang in languages" :value="lang.code">{{lang.name}}</option>
             @*<option value="en-US">English (US)</option>
             <option value="en-GB">English (UK)</option>
             <option value="fr-FR">French</option>
@@ -23,11 +24,15 @@
             <option value="ja-JP">Japanese</option>*@
         </select>
     </label>
-    <button onclick="profileApp.SaveProfile()" class="btn btn-info">Save</button>
+    <button v-on:click="saveProfile" class="btn btn-info">Save</button>
 </div>
 
 @section scripts
 {
+    <script src="~/lib/vue/vue.global.js"></script>
+    <script src="~/lib/vue/vue.global.min.js"></script>
+    <script src="~/lib/vue/vue.global.prod.js"></script>
+    <script src="~/lib/vue/vue.global.prod.min.js"></script>
     <script src="~/js/LanguageDictionary.js"></script>
     <script src="~/js/Profile.js"></script>
 }

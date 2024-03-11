@@ -95,7 +95,7 @@ textarea {
     z-index:1;
 }
 
-#joinDiv label {
+#profileDiv label {
     display: block;
 }
 
@@ -151,7 +151,19 @@ textarea {
 }
 
 .invited {
-    float: right;
+    background-color: salmon;
+}
+
+.inviteReceived {
+    background-color: lightgreen;
+}
+
+.inviteMessage {
+    float:right; 
+}
+
+.invitedCheck {
+    padding-left: 10px;
 }
 
 #soundSpan {

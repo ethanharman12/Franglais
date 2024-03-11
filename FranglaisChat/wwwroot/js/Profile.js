@@ -1,40 +1,72 @@
-﻿var profileApp = (function ()
-{
-    function LoadProfile()
-    {
-        langDictionary.GetOptions(document.getElementById("languageDDL"));
+﻿const { createApp, ref } = Vue
 
-        var lang = "English";
-        var name = "User";
+createApp({
+    setup() {
+        const languages = [
+            {
+                "code": "en-US",
+                "name": "English (US)"
+            },
+            {
+                "code": "en-GB",
+                "name": "English (UK)"
+            },
+            {
+                "code": "fr-FR",
+                "name": "French (France)"
+            },
+            {
+                "code": "fr-CA",
+                "name": "French (Canada)"
+            },
+            {
+                "code": "es-MX",
+                "name": "Spanish (Mexico)"
+            },
+            {
+                "code": "es-ES",
+                "name": "Spanish (Spain)"
+            },
+            {
+                "code": "de-DE",
+                "name": "German"
+            },
+            {
+                "code": "t-IT",
+                "name": "Italian"
+            },
+            {
+                "code": "ru-RU",
+                "name": "Russian"
+            },
+            {
+                "code": "ja-JP",
+                "name": "Japanese"
+            }];
 
-        if (localStorage)
-        {
-            lang = localStorage.language;
-            name = localStorage.userName;
+        const userName = ref(localStorage && localStorage.userName ? localStorage.userName : "");
+        const selectedLanguage = ref(localStorage && localStorage.language ? localStorage.language : languages[0].code);
+
+        function saveProfile() {
+            var lang = selectedLanguage.value;
+            var name = userName.value;
+
+            if (localStorage) {
+                localStorage.language = lang;
+                localStorage.userName = name;
+            }
+            else {
+                //?
+            }
+
+            window.location = "/Home/Lobby";
         }
 
-        $("#languageDDL").val(lang);
-        $("#userNameTextBox").val(name);
-    };
-    function SaveProfile()
-    {
-        var lang = $("#languageDDL").val();
-        var name = $("#userNameTextBox").val();
-
-        if (localStorage)
-        {
-            localStorage.language = lang;
-            localStorage.userName = name;
+        return {
+            languages,
+            saveProfile,
+            selectedLanguage,
+            userName
         }
-
-        window.location = "/Home/Lobby";
-    };
-
-    return {
-        LoadProfile: LoadProfile,
-        SaveProfile: SaveProfile
     }
-
-})();
-
-profileApp.LoadProfile();
+}).mount('#profileDiv')

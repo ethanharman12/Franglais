@@ -10,12 +10,18 @@
         "dist/browser/signalr.js",
         "dist/browser/signalr.min.js"
       ]
+    },
+    {
+      "library": "bootstrap-icons@1.11.3",
+      "destination": "wwwroot/lib/bootstrap-icons/"
+    },
+    {
+      "library": "vue@3.4.21",
+      "destination": "wwwroot/lib/vue/"
+    },
+    {
+      "library": "lodash.js@4.17.21",
+      "destination": "wwwroot/lib/lodash.js/"
     }
-  ,
-{
-  "provider": "cdnjs",
-  "library": "bootstrap-icons@1.11.3",
-  "destination": "wwwroot/lib/bootstrap-icons/"
-}
-]
+  ]
 }
