@@ -5,7 +5,7 @@
 }
 <input type="hidden" id="roomId" value="@Model.Id"></input>
 <h2>Chat Room @Model.Id</h2>
-<div id="chatApp" class="container">
+<div id="chatApp" class="container" v-cloak>
     <div class="row">
         <div id="participantsDiv" class="col-md-3">
             <div v-for="user in users" v-bind:id="`User${user.id}`" class="userDiv">
@@ -16,7 +16,7 @@
             <div id="chatWindow">
                 <div v-for="message in messages" class="row">
                     <div class="col-md-3" :class="{theirMessageLabel: !message.mine, myMessageLabel: message.mine}">{{message.label}}</div>
-                    <div class="col-md-8" :class="{theirMessage: !message.mine, myMessage: message.mine}">{{message.text}}</div>
+                    <div class="col-md-8" :class="{theirMessage: !message.mine, myMessage: message.mine}">{{message.text}}<br />{{message.translation}}</div>
                 </div>
             </div>
             <form onsubmit="return false;" class="row">

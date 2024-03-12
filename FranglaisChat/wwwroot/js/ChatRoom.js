@@ -14,13 +14,14 @@ createApp({
             users.value.push(user);
         };
 
-        function displayLanguage(language) {
-            return langDictionary.Languages[language];
-        };
-
         function disconnectUser(conn) {
             _.remove(users.value, user => user.id == conn);
         };
+
+        function displayLanguage(language) {
+            return langDictionary.Languages[language];
+        };
+        
         function receiveMessage(mess) {
             var messClass = "myMessage";
             var message = mess.message;
@@ -32,7 +33,7 @@ createApp({
                     message += "<br/>" + mess.translation;
                 }
 
-                if (soundsOn) {
+                if (soundsOn.value) {
                     playSound(mess);
                 }
             }
@@ -75,6 +76,7 @@ createApp({
                 window.speechSynthesis.speak(msg);
             }
         }
+
         function sendMessage() {
             var mess = $("#messageBox").val();
             var sendTime = new Date();
@@ -83,6 +85,7 @@ createApp({
 
             $("#messageBox").val("").focus();
         };
+
         function setUpHub() {
             roomId = parseInt(document.getElementById('roomId').value);
 
@@ -99,6 +102,7 @@ createApp({
             });
 
         };
+
         function speak() {
             if (typeof (webkitSpeechRecognition) != "undefined") {
                 var recognition = new webkitSpeechRecognition();
@@ -125,6 +129,7 @@ createApp({
                 speaking.value = true;
             }
         };
+
         function toggleSound() {
             soundsOn.value = !soundsOn.value;
         };

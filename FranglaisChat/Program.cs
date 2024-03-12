@@ -2,11 +2,7 @@ using Azure.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FranglaisChat
 {
@@ -24,12 +20,6 @@ namespace FranglaisChat
                     var keyVaultEndpoint = GetKeyVaultEndpoint();
                     if (!string.IsNullOrEmpty(keyVaultEndpoint))
                     {
-                        //var azureServiceTokenProvider = new AzureServiceTokenProvider();
-                        //var credentials = new ManagedIdentityCredential();
-                        //var keyVaultClient = new KeyVaultClient(
-                        //    new KeyVaultCredential(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback))
-                        //    );
-                        //config.AddAzureKeyVault(keyVaultEndpoint, keyVaultClient, new DefaultKeyVaultSecretManager());
                         config.AddAzureKeyVault(new Uri(keyVaultEndpoint), new DefaultAzureCredential());
                     }
                 })
