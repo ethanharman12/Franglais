@@ -9,7 +9,7 @@
 <div class="row">
     <div id="usersDiv" class="col-md-6" v-cloak>
         <div v-for="user in users" v-bind:id="`User${user.id}`" class="userDiv" 
-        :class="{invited: user.invited, inviteReceived: user.inviteReceived, preview: user.inviteReceived}" 
+        :class="{invited: user.invited, inviteReceived: user.inviteReceived, preview: user.inviteReceived, chatBot: user.isChatBot}" 
         v-on:click="user.inviteReceived ? accept(user.id) : invite(user.id)"> 
             {{user.userName}} - {{displayLanguage(user.language)}}
             <div class="inviteMessage" v-if="user.invited || user.inviteReceived">

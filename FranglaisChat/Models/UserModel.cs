@@ -11,5 +11,6 @@ namespace FranglaisChat.Models
         public bool IsChatting { get; set; }
         public string Language { get; set; }
         public List<Guid> Invites { get; set; }
+        public bool IsChatBot { get; set; }
     }
 }

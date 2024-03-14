@@ -1,5 +1,6 @@
 ﻿using FranglaisChat.Models;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +12,53 @@ namespace FranglaisChat
     {
         public static List<ChatRoom> ChatRooms = new List<ChatRoom>();
         public static List<UserModel> ConnectedUsers = new List<UserModel>();
+        public static Dictionary<Guid, IChatBot> ChatBots = new Dictionary<Guid, IChatBot>();
+        public static bool Initialized = false;
 
-        private static int messageId = 1;
-        private static int roomId = 1;
+        private static int _messageId = 1;
+        private static int _roomId = 1;
 
         public ITranslator translator { get; set; }
 
-        public ChatHub(ITranslator translator)
+        public ChatHub(ITranslator translator, IConfiguration config)
         {
             this.translator = translator;
+
+            if (!Initialized)
+            {
+                var chatBot = new UserModel
+                {
+                    Id = Guid.NewGuid(),
+                    IsChatBot = true,
+                    IsChatting = false,
+                    Language = "fr-FR",
+                    UserName = "French ChatBot",
+                    ConnectionIds = new Dictionary<string, List<string>>(),
+                    Invites = new List<Guid>()
+                };
+                chatBot.ConnectionIds.Add("Lobby", new List<string>());
+
+                ConnectedUsers.Add(chatBot);
+                ChatBots.Add(chatBot.Id, new ChatBot(config));
+                Initialized = true;
+            }
+        }
+
+        private ChatRoom CreateRoom(List<UserModel> users)
+        {
+            var room = new ChatRoom()
+            {
+                Id = _roomId++,
+                Users = users
+            };
+
+            ChatRooms.Add(room);
+
+            var ids = users.SelectMany(u => u.ConnectionIds["Lobby"]).Distinct();
+
+            Clients.Clients(ids).SendAsync("joinRoom", room);
+
+            return room;
         }
 
         public void AcceptChat(Guid acceptId, Guid inviteId)
@@ -29,17 +68,7 @@ namespace FranglaisChat
 
             if (inviter != null && current != null && inviter.Invites.Contains(current.Id))
             {
-                var room = new ChatRoom()
-                {
-                    Id = roomId++,
-                    Users = new List<UserModel>() { inviter, current }
-                };
-
-                ChatRooms.Add(room);
-
-                var ids = inviter.ConnectionIds["Lobby"].Union(current.ConnectionIds["Lobby"]).ToList();
-
-                Clients.Clients(ids).SendAsync("joinRoom", room);
+                CreateRoom(new List<UserModel> { inviter, current });
             }
         }
 
@@ -55,12 +84,20 @@ namespace FranglaisChat
 
             if (invited != null)
             {
-                if (!currentUser.Invites.Contains(toId))
+                if (invited.IsChatBot)
                 {
-                    currentUser.Invites.Add(toId);
+                    var room = CreateRoom(new List<UserModel> { currentUser, invited });
+                    invited.ConnectionIds.Add("Room" + room.Id, new List<string>());
                 }
+                else
+                {
+                    if (!currentUser.Invites.Contains(toId))
+                    {
+                        currentUser.Invites.Add(toId);
+                    }
 
-                Clients.Clients(invited.ConnectionIds["Lobby"].ToList()).SendAsync("inviteReceived", currentUser);
+                    Clients.Clients(invited.ConnectionIds["Lobby"].ToList()).SendAsync("inviteReceived", currentUser);
+                }
             }
         }
 
@@ -98,6 +135,7 @@ namespace FranglaisChat
                     ConnectionIds = new Dictionary<string, List<string>>(),
                     UserName = name,
                     Language = language,
+                    IsChatBot = false,
                     IsChatting = false,
                     Invites = new List<Guid>()
                 };
@@ -179,6 +217,44 @@ namespace FranglaisChat
         //    return base.OnConnectedAsync(stopCalled);
         //}
 
+        private async Task SendMessageToOthers(int roomId, ChatMessage mess, UserModel sender, List<UserModel> receivers)
+        {
+            var sourceLang = mess.Sender.Language.Substring(0, 2);
+
+            //should just group by language in case of >2 users
+            foreach (var user in receivers)
+            {
+                var userLang = user.Language.Substring(0, 2);
+
+                if (sourceLang != userLang)
+                {
+                    mess.Translation = await translator.TranslateMessage(mess.Message, sourceLang, userLang);
+                }
+                mess.ServerSent = DateTime.Now;
+
+                if (user.IsChatBot)
+                {
+                    var response = ChatBots[user.Id].SendMessage(mess.Translation);
+                    if (response != null)
+                    {
+                        //only for 1-1 chats
+                        var responseMess = new ChatMessage
+                        {
+                            Id = _messageId++,
+                            Message = response,
+                            ClientSent = DateTime.Now,
+                            Sender = user
+                        };
+                        await SendMessageToOthers(roomId, responseMess, user, new List<UserModel> { sender });
+                    }
+                }
+                else
+                {
+                    await Clients.Clients(user.ConnectionIds["Room" + roomId].ToList()).SendAsync("receiveMessage", mess);
+                }
+            }
+        }
+
         public async Task SendMessage(int roomId, ChatMessage mess)
         {
             var room = ChatRooms.FirstOrDefault(rm => rm.Id == roomId);
@@ -188,24 +264,12 @@ namespace FranglaisChat
                 var sender = room.Users.First(cu => cu.ConnectionIds["Room" + roomId].Contains(Context.ConnectionId));
 
                 mess.Sender = sender;
-                mess.Id = messageId++;
+                mess.Id = _messageId++;
 
-                var sourceLang = mess.Sender.Language.Substring(0, 2);
-
-                //should just group by language in case of >2 users
-                foreach (var user in room.Users.Where(u => u != sender))
-                {
-                    var userLang = user.Language.Substring(0, 2);
-
-                    if (sourceLang != userLang)
-                    {
-                        mess.Translation = await translator.TranslateMessage(mess.Message, sourceLang, userLang);
-                    }
-                    mess.ServerSent = DateTime.Now;
-
-                    await Clients.Clients(user.ConnectionIds["Room" + roomId].ToList()).SendAsync("receiveMessage", mess);
-                }
+                //should this just be done client side?
                 await Clients.Clients(sender.ConnectionIds["Room" + roomId]).SendAsync("receiveMessage", mess);
+
+                await SendMessageToOthers(roomId, mess, sender, room.Users.Except(new List<UserModel> { sender }).ToList());
             }
         }
     }

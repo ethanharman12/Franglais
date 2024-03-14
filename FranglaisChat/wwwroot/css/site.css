@@ -111,6 +111,10 @@ textarea {
     cursor: pointer;
 }
 
+.chatBot {
+    background-color: #fafad2;
+}
+
 @-webkit-keyframes preview {
     0% {
         background-color: lightgreen;
