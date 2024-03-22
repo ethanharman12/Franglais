@@ -23,9 +23,7 @@ createApp({
         };
         
         function receiveMessage(mess) {
-            var messClass = "myMessage";
             var message = mess.message;
-            var label = mess.sender.userName;
 
             if (mess.sender.id != userId) {
                 messClass = "theirMessage";
@@ -42,6 +40,7 @@ createApp({
                 label: mess.sender.userName,
                 text: mess.message,
                 translation: mess.translation,
+                original: mess.original,
                 mine: mess.sender.id == userId
             })
 
@@ -71,7 +70,7 @@ createApp({
                     msg = new SpeechSynthesisUtterance(message.message);
                 }
 
-                msg.lang = localStorage.language;
+                msg.lang = localStorage.chatLanguage;
 
                 window.speechSynthesis.speak(msg);
             }
@@ -107,7 +106,7 @@ createApp({
             if (typeof (webkitSpeechRecognition) != "undefined") {
                 var recognition = new webkitSpeechRecognition();
 
-                recognition.lang = localStorage.language;
+                recognition.lang = localStorage.chatLanguage;
 
                 recognition.onresult = function (event) {
                     if (event.results.length > 0) {

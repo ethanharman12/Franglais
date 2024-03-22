@@ -14,7 +14,7 @@ namespace FranglaisChat
 
         public ChatBot(IConfiguration config)
         {
-            _apiKey = config["Franglais:ChatGPTKey"]; 
+            _apiKey = config["Franglais:ChatGPTKey"];
             _client = new RestClient("https://api.openai.com/v1/chat/completions");
 
             messageHistory.Add(new ChatGPTMessage("system", "You are a friend chatting with a new student to the language."));

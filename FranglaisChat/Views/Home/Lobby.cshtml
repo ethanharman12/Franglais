@@ -11,7 +11,7 @@
         <div v-for="user in users" v-bind:id="`User${user.id}`" class="userDiv" 
         :class="{invited: user.invited, inviteReceived: user.inviteReceived, preview: user.inviteReceived, chatBot: user.isChatBot}" 
         v-on:click="user.inviteReceived ? accept(user.id) : invite(user.id)"> 
-            {{user.userName}} - {{displayLanguage(user.language)}}
+            {{user.userName}} - {{displayLanguage(user.chatLanguage)}}/{{displayLanguage(user.nativeLanguage)}}
             <div class="inviteMessage" v-if="user.invited || user.inviteReceived">
                 <span class="invitedText">{{user.invited ? "Invite Sent!" : "Invite Received!"}}</span>
                 <span class="invitedCheck bi-check-circle"></span>

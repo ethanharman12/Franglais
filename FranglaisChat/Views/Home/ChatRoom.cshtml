@@ -9,14 +9,24 @@
     <div class="row">
         <div id="participantsDiv" class="col-md-3">
             <div v-for="user in users" v-bind:id="`User${user.id}`" class="userDiv">
-                {{user.userName}} - {{displayLanguage(user.language)}}
+                {{user.userName}} - {{displayLanguage(user.chatLanguage)}}/{{displayLanguage(user.nativeLanguage)}}
             </div>
         </div>
         <div id="chatDiv" class="col-md-9">
             <div id="chatWindow">
                 <div v-for="message in messages" class="row">
                     <div class="col-md-3" :class="{theirMessageLabel: !message.mine, myMessageLabel: message.mine}">{{message.label}}</div>
-                    <div class="col-md-8" :class="{theirMessage: !message.mine, myMessage: message.mine}">{{message.text}}<br />{{message.translation}}</div>
+                    <div class="col-md-8" :class="{theirMessage: !message.mine, myMessage: message.mine}">
+                        <span class="chatMessage">{{message.text}}</span>
+                        <div v-if="message.translation != message.text">
+                            <br />
+                            <span class="translationLabel">Translation: </span><span class="translationMessage">{{message.translation}}</span>
+                        </div>
+                        <div v-if="message.original != message.text">
+                            <br />
+                            <span class="originalLabel">Original: </span><span class="originalMessage">{{message.original}}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <form onsubmit="return false;" class="row">

@@ -7,7 +7,8 @@ createApp({
         var chatHub = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
         var userId = localStorage.userId;
         var name = localStorage.userName;
-        var lang = localStorage.language;
+        var chatLang = localStorage.chatLanguage;
+        var nativeLang = localStorage.nativeLanguage;
 
         function accept(inviteId) {
             chatHub.invoke("acceptChat", userId, inviteId);
@@ -50,14 +51,14 @@ createApp({
         };
         
         function setUpHub() {
-            if (name && lang) {
+            if (name && chatLang && nativeLang) {
                 chatHub.on("inviteReceived", receiveInvite);
                 chatHub.on("joinRoom", joinRoom);
                 chatHub.on("userDisconnected", disconnectUser);
                 chatHub.on("userJoined", addUser);
 
                 chatHub.start().then(function () {
-                    chatHub.invoke("joinLobby", name, lang, userId).then(function (sentId) {
+                    chatHub.invoke("joinLobby", name, chatLang, nativeLang, userId).then(function (sentId) {
                         localStorage.userId = sentId;
                         userId = sentId;
 

@@ -11,6 +11,7 @@ namespace FranglaisChat.Models
         public UserModel Sender { get; set; }
         public string Message { get; set; }
         public string Translation { get; set; }
+        public string Original { get; set; }
         public DateTime ClientSent { get; set; }
         public DateTime ServerSent { get; set; }
     }

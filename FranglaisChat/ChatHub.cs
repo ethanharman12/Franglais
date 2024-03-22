@@ -31,7 +31,8 @@ namespace FranglaisChat
                     Id = Guid.NewGuid(),
                     IsChatBot = true,
                     IsChatting = false,
-                    Language = "fr-FR",
+                    ChatLanguage = "fr-FR",
+                    NativeLanguage = "fr-FR",
                     UserName = "French ChatBot",
                     ConnectionIds = new Dictionary<string, List<string>>(),
                     Invites = new List<Guid>()
@@ -101,7 +102,7 @@ namespace FranglaisChat
             }
         }
 
-        public Guid JoinLobby(string name, string language, Guid? id)
+        public Guid JoinLobby(string name, string chatLanguage, string nativeLanguage, Guid? id)
         {
             if (!id.HasValue)
             {
@@ -112,7 +113,8 @@ namespace FranglaisChat
 
             if (currentUser != null)
             {
-                currentUser.Language = language;
+                currentUser.ChatLanguage = chatLanguage;
+                currentUser.NativeLanguage = nativeLanguage;
                 currentUser.UserName = name;
 
                 if (!currentUser.ConnectionIds.Any(cids => cids.Value.Contains(Context.ConnectionId)))
@@ -134,7 +136,8 @@ namespace FranglaisChat
                     Id = id.Value,
                     ConnectionIds = new Dictionary<string, List<string>>(),
                     UserName = name,
-                    Language = language,
+                    ChatLanguage = chatLanguage,
+                    NativeLanguage = nativeLanguage,
                     IsChatBot = false,
                     IsChatting = false,
                     Invites = new List<Guid>()
@@ -219,22 +222,27 @@ namespace FranglaisChat
 
         private async Task SendMessageToOthers(int roomId, ChatMessage mess, UserModel sender, List<UserModel> receivers)
         {
-            var sourceLang = mess.Sender.Language.Substring(0, 2);
-
             //should just group by language in case of >2 users
             foreach (var user in receivers)
             {
-                var userLang = user.Language.Substring(0, 2);
-
-                if (sourceLang != userLang)
+                if (mess.Sender.ChatLanguage != user.ChatLanguage)
                 {
-                    mess.Translation = await translator.TranslateMessage(mess.Message, sourceLang, userLang);
+                    mess.Message = await translator.TranslateMessage(mess.Message, mess.Sender.ChatLanguage, user.ChatLanguage);
+                    mess.Translation = await translator.TranslateMessage(mess.Message, mess.Sender.ChatLanguage, user.NativeLanguage);
                 }
+                else
+                {
+                    if (user.ChatLanguage != user.NativeLanguage)
+                    {
+                        mess.Translation = await translator.TranslateMessage(mess.Message, mess.Sender.ChatLanguage, user.NativeLanguage);
+                    }
+                }
+
                 mess.ServerSent = DateTime.Now;
 
                 if (user.IsChatBot)
                 {
-                    var response = ChatBots[user.Id].SendMessage(mess.Translation);
+                    var response = ChatBots[user.Id].SendMessage(mess.Message);
                     if (response != null)
                     {
                         //only for 1-1 chats
@@ -242,9 +250,10 @@ namespace FranglaisChat
                         {
                             Id = _messageId++,
                             Message = response,
+                            Original = response,
                             ClientSent = DateTime.Now,
                             Sender = user
-                        };
+                        };                        
                         await SendMessageToOthers(roomId, responseMess, user, new List<UserModel> { sender });
                     }
                 }
@@ -265,8 +274,14 @@ namespace FranglaisChat
 
                 mess.Sender = sender;
                 mess.Id = _messageId++;
+                mess.Original = mess.Message;
 
                 //should this just be done client side?
+                if (sender.ChatLanguage != sender.NativeLanguage)
+                {
+                    //this gets very messy overwriting translations to send to other clients - refactor
+                    mess.Translation = await translator.TranslateMessage(mess.Message, sender.ChatLanguage, sender.NativeLanguage);
+                }
                 await Clients.Clients(sender.ConnectionIds["Room" + roomId]).SendAsync("receiveMessage", mess);
 
                 await SendMessageToOthers(roomId, mess, sender, room.Users.Except(new List<UserModel> { sender }).ToList());

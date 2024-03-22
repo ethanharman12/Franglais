@@ -32,7 +32,7 @@ createApp({
                 "name": "German"
             },
             {
-                "code": "t-IT",
+                "code": "it-IT",
                 "name": "Italian"
             },
             {
@@ -45,14 +45,17 @@ createApp({
             }];
 
         const userName = ref(localStorage && localStorage.userName ? localStorage.userName : "");
-        const selectedLanguage = ref(localStorage && localStorage.language ? localStorage.language : languages[0].code);
+        const selectedNativeLanguage = ref(localStorage && localStorage.nativeLanguage ? localStorage.nativeLanguage : languages[0].code);
+        const selectedChatLanguage = ref(localStorage && localStorage.chatLanguage ? localStorage.chatLanguage : languages[0].code);
 
         function saveProfile() {
-            var lang = selectedLanguage.value;
+            var chatLang = selectedChatLanguage.value;
+            var nativeLang = selectedNativeLanguage.value;
             var name = userName.value;
 
             if (localStorage) {
-                localStorage.language = lang;
+                localStorage.chatLanguage = chatLang;
+                localStorage.nativeLanguage = nativeLang;
                 localStorage.userName = name;
             }
             else {
@@ -65,7 +68,8 @@ createApp({
         return {
             languages,
             saveProfile,
-            selectedLanguage,
+            selectedChatLanguage,
+            selectedNativeLanguage,
             userName
         }
     }
