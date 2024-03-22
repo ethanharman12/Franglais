@@ -26,14 +26,24 @@ namespace FranglaisChat
 
             if (!Initialized)
             {
+                AddChatBots(config);
+
+                Initialized = true;
+            }
+        }
+
+        private void AddChatBots(IConfiguration config)
+        {
+            foreach (var lang in LanguageDictionary.Languages)
+            {
                 var chatBot = new UserModel
                 {
                     Id = Guid.NewGuid(),
                     IsChatBot = true,
                     IsChatting = false,
-                    ChatLanguage = "fr-FR",
-                    NativeLanguage = "fr-FR",
-                    UserName = "French ChatBot",
+                    ChatLanguage = lang.Key,
+                    NativeLanguage = lang.Key,
+                    UserName = lang.Value,
                     ConnectionIds = new Dictionary<string, List<string>>(),
                     Invites = new List<Guid>()
                 };
@@ -41,7 +51,6 @@ namespace FranglaisChat
 
                 ConnectedUsers.Add(chatBot);
                 ChatBots.Add(chatBot.Id, new ChatBot(config));
-                Initialized = true;
             }
         }
 
@@ -253,7 +262,7 @@ namespace FranglaisChat
                             Original = response,
                             ClientSent = DateTime.Now,
                             Sender = user
-                        };                        
+                        };
                         await SendMessageToOthers(roomId, responseMess, user, new List<UserModel> { sender });
                     }
                 }

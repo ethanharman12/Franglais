@@ -10,7 +10,7 @@ namespace FranglaisChat
         private readonly string _apiKey;
         private readonly RestClient _client;
 
-        private static List<ChatGPTMessage> messageHistory = new List<ChatGPTMessage>();
+        private List<ChatGPTMessage> messageHistory = new List<ChatGPTMessage>();
 
         public ChatBot(IConfiguration config)
         {

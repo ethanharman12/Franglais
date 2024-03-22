@@ -65,7 +65,9 @@ createApp({
                         chatHub.invoke("getUsers").then(function (lobbyUsers) {
                             lobbyUsers.forEach(function (user) {
                                 if (user.id != userId) {
-                                    addUser(user);
+                                    if (!user.isChatBot || user.chatLanguage == chatLang) {
+                                        addUser(user);
+                                    }
                                 }
                             });
                         });

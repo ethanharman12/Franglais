@@ -1,5 +1,6 @@
 ﻿var langDictionary = (function ()
 {
+    //find way to share with c# class
     var dictionary = [];
 
     dictionary["en-US"] = "English (US)";
