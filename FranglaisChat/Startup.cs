@@ -27,7 +27,8 @@ namespace FranglaisChat
             services.AddControllersWithViews();
             services.AddSignalR(o => o.EnableDetailedErrors = true);
             services.AddScoped<ITranslator, GoogleTranslator>();
-            services.AddScoped<IChatBot, ChatBot>();
+            //services.AddScoped<IChatBot, ChatGPTChatBot>();
+            services.AddScoped<IChatBot, GoogleChatBot>();
             //services.AddDistributedMemoryCache();
         }
 

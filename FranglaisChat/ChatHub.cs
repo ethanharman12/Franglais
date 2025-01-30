@@ -50,7 +50,7 @@ namespace FranglaisChat
                 chatBot.ConnectionIds.Add("Lobby", new List<string>());
 
                 ConnectedUsers.Add(chatBot);
-                ChatBots.Add(chatBot.Id, new ChatBot(config));
+                ChatBots.Add(chatBot.Id, new GoogleChatBot(config));
             }
         }
 

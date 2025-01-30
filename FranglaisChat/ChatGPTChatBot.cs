@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace FranglaisChat
 {
-    public class ChatBot : IChatBot
+    public class ChatGPTChatBot : IChatBot
     {
         private readonly string _apiKey;
         private readonly RestClient _client;
 
         private List<ChatGPTMessage> messageHistory = new List<ChatGPTMessage>();
 
-        public ChatBot(IConfiguration config)
+        public ChatGPTChatBot(IConfiguration config)
         {
             _apiKey = config["Franglais:ChatGPTKey"];
             _client = new RestClient("https://api.openai.com/v1/chat/completions");
