@@ -32,7 +32,7 @@ namespace FranglaisChat
             var requestBody = new
             {
                 //model = "gpt-3.5-turbo",
-                system_instruction = new GoogleAIMessage("", "You are a friend chatting with a new student to the language."),
+                system_instruction = new GoogleAIMessage("", "You are a friend chatting with a beginner student of the language. Speak in the language they are using."),
                 //Try to point out times when they are using words or phrases incorrectly, but don't be too critical. Try to keep your responses short and use simple vocabulary.
                 contents = messageHistory
             };
