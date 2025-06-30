@@ -46,6 +46,11 @@ namespace FranglaisChat
 
             return responseMessage;
         }
+
+        public void SetMode(BotModeEnum botMode)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 
     public class ChatGPTMessage

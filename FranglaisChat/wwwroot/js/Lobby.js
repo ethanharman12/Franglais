@@ -89,4 +89,4 @@ createApp({
             users
         }
     }
-}).mount('#usersDiv')
+}).mount('#lobbyDiv')

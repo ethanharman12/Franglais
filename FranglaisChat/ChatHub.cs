@@ -43,7 +43,7 @@ namespace FranglaisChat
                     IsChatting = false,
                     ChatLanguage = lang.Key,
                     NativeLanguage = lang.Key,
-                    UserName = lang.Value,
+                    UserName = lang.Value + " Chat Bot",
                     ConnectionIds = new Dictionary<string, List<string>>(),
                     Invites = new List<Guid>()
                 };
@@ -168,33 +168,33 @@ namespace FranglaisChat
 
             if (room != null)
             {
-                var current = room.Users.FirstOrDefault(cu => cu.Id == userId);
+                var joiningUser = room.Users.FirstOrDefault(cu => cu.Id == userId);
 
-                if (current == null)
+                if (joiningUser == null)
                 {
                     //can a new user join the room?
                     //yes for now...need to lock down somehow
-                    current = ConnectedUsers.FirstOrDefault(cu => cu.Id == userId);
+                    joiningUser = ConnectedUsers.FirstOrDefault(cu => cu.Id == userId);
 
-                    if (current != null)
+                    if (joiningUser != null)
                     {
                         List<string> ids = new List<string>();
                         room.Users.ForEach(user => ids = ids.Union(user.ConnectionIds["Room" + roomId]).ToList());
-                        Clients.Clients(ids).SendAsync("userJoined", current);
+                        Clients.Clients(ids).SendAsync("userJoined", joiningUser);
 
-                        room.Users.Add(current);
+                        room.Users.Add(joiningUser);
                     }
                 }
 
-                if (current != null)
+                if (joiningUser != null)
                 {
-                    if (!current.ConnectionIds.Keys.Contains("Room" + roomId))
+                    if (!joiningUser.ConnectionIds.Keys.Contains("Room" + roomId))
                     {
-                        current.ConnectionIds.Add("Room" + roomId, new List<string>() { Context.ConnectionId });
+                        joiningUser.ConnectionIds.Add("Room" + roomId, new List<string>() { Context.ConnectionId });
                     }
                     else
                     {
-                        current.ConnectionIds["Room" + roomId].Add(Context.ConnectionId);
+                        joiningUser.ConnectionIds["Room" + roomId].Add(Context.ConnectionId);
                     }
                 }
 
@@ -294,6 +294,34 @@ namespace FranglaisChat
                 await Clients.Clients(sender.ConnectionIds["Room" + roomId]).SendAsync("receiveMessage", mess);
 
                 await SendMessageToOthers(roomId, mess, sender, room.Users.Except(new List<UserModel> { sender }).ToList());
+            }
+        }
+
+        public async Task SetBotMode(int roomId, BotModeEnum botMode)
+        {
+            var room = ChatRooms.FirstOrDefault(rm => rm.Id == roomId);
+
+            if (room != null)
+            {
+                var sender = room.Users.First(cu => cu.ConnectionIds["Room" + roomId].Contains(Context.ConnectionId));
+
+                var bot = room.Users.FirstOrDefault(u => u.IsChatBot);
+
+                if (bot.IsChatBot)
+                {
+                    ChatBots[bot.Id].SetMode(botMode);
+                    
+                    //only for 1-1 chats
+                    var responseMess = new ChatMessage
+                    {
+                        Id = _messageId++,
+                        Message = "ChatBot set to Mode " + botMode,
+                        Original = "ChatBot set to Mode " + botMode,
+                        ClientSent = DateTime.Now,
+                        Sender = bot
+                    };
+                    await SendMessageToOthers(roomId, responseMess, bot, new List<UserModel> { sender });                    
+                }
             }
         }
     }

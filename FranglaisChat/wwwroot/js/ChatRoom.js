@@ -5,6 +5,7 @@ createApp({
         var chatHub = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
         var roomId = 0;
         var userId = "";
+        var botMode = "Friend";
         var soundsOn = ref(false);
         var speaking = ref(false);
         const users = ref([]);
@@ -13,6 +14,11 @@ createApp({
         function addUser(user) {
             users.value.push(user);
         };
+
+        function changeBotMode(mode) {
+            botMode = mode;
+            chatHub.invoke("setBotMode", roomId, mode);
+        }
 
         function disconnectUser(conn) {
             _.remove(users.value, user => user.id == conn);
@@ -43,19 +49,6 @@ createApp({
                 original: mess.original,
                 mine: mess.sender.id == userId
             })
-
-            //var labelCell = '<td class="' + messClass + 'Label">' + label + '</td>';
-            //var messCell = '<td class="' + messClass + '">' + message + '</td>';
-            //var row = (mess.sender.id != userId)
-            //                ? labelCell + messCell + "<td></td>"
-            //                : "<td></td>" + messCell + labelCell;
-
-            //$("#chatWindow table").append('<tr class="row">' + row + '</tr>');
-            //$("#chatWindow").append("<div class='" + messClass + "Label col-md-3'>" + label + "</div>" +
-            //    "<div class='message " + messClass + " col-md-8'>" + message + "</div>");
-
-            //$("#chatWindow").append("<div class='message " + messClass + "'>" +
-            //    "<div class='" + messClass + "Label>" + label + "</div><span>" + message + "</span></div>");
 
             $('#chatWindow').animate({ scrollTop: $('#chatWindow').prop("scrollHeight") }, 500);
         };
@@ -136,6 +129,8 @@ createApp({
         setUpHub();
 
         return {
+            botMode,
+            changeBotMode,
             displayLanguage,
             messages,
             sendMessage,

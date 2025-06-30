@@ -6,18 +6,27 @@
 
 <h4>Chat with Friends!</h4>
 <h6>Click a UserName to Send or Accept a Chat Request!</h6>
-<div class="row">
-    <div id="usersDiv" class="col-md-6" v-cloak>
-        <div v-for="user in users" v-bind:id="`User${user.id}`" class="userDiv" 
-        :class="{invited: user.invited, inviteReceived: user.inviteReceived, preview: user.inviteReceived, chatBot: user.isChatBot}" 
-        v-on:click="user.inviteReceived ? accept(user.id) : invite(user.id)"> 
-            {{user.userName}} - {{displayLanguage(user.chatLanguage)}}/{{displayLanguage(user.nativeLanguage)}}
-            <div class="inviteMessage" v-if="user.invited || user.inviteReceived">
-                <span class="invitedText">{{user.invited ? "Invite Sent!" : "Invite Received!"}}</span>
-                <span class="invitedCheck bi-check-circle"></span>
+<div class="row" id="lobbyDiv">
+    <div class="col-md-9">
+        <div id="usersDiv" class="row" v-cloak>
+            <div v-for="user in users" v-bind:id="`User${user.id}`" class="userDiv col-md-9"
+                 :class="{invited: user.invited, inviteReceived: user.inviteReceived, preview: user.inviteReceived, chatBot: user.isChatBot}"
+                 v-on:click="user.inviteReceived ? accept(user.id) : invite(user.id)">
+                <span class="col-lg-9 col-sm-12">{{user.userName}} - {{displayLanguage(user.chatLanguage)}}/{{displayLanguage(user.nativeLanguage)}}</span>
+                <div class="inviteMessage col-lg-3 col-sm-12" v-if="user.invited || user.inviteReceived">
+                    <div class="invitedText">
+                        <span>{{user.invited ? "Invite Sent!" : "Invite Received!"}}</span>
+                        <span class="invitedCheck bi-check-circle"></span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    <div id="filtersDiv" class="col-md-3" v-cloak>
+        <div>Total Users: <span>{{users.length}}</span></div>
+         @*<div>Search User: <input /></div>*@
+        <div>Filter Languages: Dropdown Checkboxes</div>
+    </div> 
 </div>
 
 @section scripts

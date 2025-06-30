@@ -13,11 +13,18 @@ namespace FranglaisChat
 
         private List<GoogleAIMessage> messageHistory = new List<GoogleAIMessage>();
 
+        private string botPrompt;
+
+        private readonly string friendBotPrompt = "You are a friend chatting with a beginner student of the language. Speak only in the language they are using.";
+        private readonly string serverBotPrompt = "You are a waiter in a restaurant chatting with a beginner student of the language. Speak only in the language they are using. Be formal and polite.";
+        private readonly string loveInterestBotPrompt = "You are a love interest chatting with a beginner student of the language. Speak only in the language they are using. Flirt casually.";
+
         public GoogleChatBot(IConfiguration config)
         {
             _apiKey = config["Franglais:GoogleAIKey"];
             _client = new RestClient($"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={_apiKey}");
 
+            botPrompt = friendBotPrompt;
             //messageHistory.Add(new GoogleAIMessage("system_instruction", "You are a friend chatting with a new student to the language."));
         }
 
@@ -32,7 +39,7 @@ namespace FranglaisChat
             var requestBody = new
             {
                 //model = "gpt-3.5-turbo",
-                system_instruction = new GoogleAIMessage("", "You are a friend chatting with a beginner student of the language. Speak in the language they are using."),
+                system_instruction = new GoogleAIMessage("", botPrompt),
                 //Try to point out times when they are using words or phrases incorrectly, but don't be too critical. Try to keep your responses short and use simple vocabulary.
                 contents = messageHistory
             };
@@ -56,6 +63,19 @@ namespace FranglaisChat
                 //log ex               
                 return "An error has occurred when getting the response from the ChatBot.";
             }            
+        }
+
+        public void SetMode(BotModeEnum botMode)
+        {
+            switch (botMode)
+            {
+                case BotModeEnum.Friend: botPrompt = friendBotPrompt;
+                    break;
+                case BotModeEnum.Server: botPrompt = serverBotPrompt;
+                    break;
+                case BotModeEnum.LoveInterest: botPrompt = loveInterestBotPrompt;
+                    break;
+            }
         }
     }
 

@@ -9,7 +9,13 @@
     <div class="row">
         <div id="participantsDiv" class="col-md-3">
             <div v-for="user in users" v-bind:id="`User${user.id}`" class="userDiv">
-                {{user.userName}} - {{displayLanguage(user.chatLanguage)}}/{{displayLanguage(user.nativeLanguage)}}
+                <span>{{user.userName}} - {{displayLanguage(user.chatLanguage)}}/{{displayLanguage(user.nativeLanguage)}}</span>
+                <div v-if="user.isChatBot">
+                    <div>Chat Bot Scenario:</div>
+                    <button class="btn btn-info" v-on:click="changeBotMode(0)"> Friend</button>
+                    <button class="btn btn-info" v-on:click="changeBotMode(1)">Server</button>
+                    <button class="btn btn-info" v-on:click="changeBotMode(2)">Love Interest</button>
+                </div>
             </div>
         </div>
         <div id="chatDiv" class="col-md-9">
